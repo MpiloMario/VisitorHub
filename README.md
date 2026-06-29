@@ -1,4 +1,4 @@
-# CampusVisit
+# ResVisit
 
 A visitor booking and management system for student residences. Students book visitor entries online, security staff verify and approve them, and admins keep a full record of campus visits — all in one place.
 
