@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResVisist - Visitor Booking System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: {
+              50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc',
+              400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca',
+              800: '#3730a3', 900: '#312e81', 950: '#1e1b4b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+<!-- ===================== HOMEPAGE / LANDING VIEW ===================== -->
+<div id="home-view" class="min-h-screen bg-white">
+  <!-- Nav -->
+  <nav class="border-b border-slate-100 px-6 py-4 flex items-center justify-between max-w-6xl mx-auto">
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
+        <i data-lucide="building-2" class="w-5 h-5 text-white"></i>
+      </div>
+      <span class="font-extrabold text-lg text-slate-800">ResVisist</span>
+    </div>
+    <button onclick="goToAuth('login')" class="btn-secondary text-sm">Sign In</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="max-w-4xl mx-auto px-6 py-20 text-center">
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-800 tracking-tight mb-5">
+      Visitor bookings, <span class="text-brand-600">without the front-desk chaos</span>
+    </h1>
+    <p class="text-lg text-slate-500 max-w-2xl mx-auto mb-8">
+      ResVisist lets students book visitor entries online, security verify and approve them in seconds, and admins keep a full record of who came on campus and when.
+    </p>
+    <div class="flex items-center justify-center gap-3 flex-wrap">
+      <button onclick="goToAuth('register')" class="btn-primary">
+        <i data-lucide="user-plus" class="w-4 h-4"></i> Register as a Student
+      </button>
+      <button onclick="goToAuth('login')" class="btn-secondary">
+        Sign In
+      </button>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="max-w-5xl mx-auto px-6 py-12 grid sm:grid-cols-3 gap-6">
+    <div class="p-6 rounded-2xl border border-slate-100">
+      <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+        <i data-lucide="user-plus" class="w-5 h-5 text-blue-600"></i>
+      </div>
+      <h3 class="font-bold text-slate-800 mb-1">Students book in minutes</h3>
+      <p class="text-sm text-slate-500">Submit visitor details, pick a date and time, and get notified the moment it's reviewed.</p>
+    </div>
+    <div class="p-6 rounded-2xl border border-slate-100">
+      <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
+        <i data-lucide="shield-check" class="w-5 h-5 text-amber-600"></i>
+      </div>
+      <h3 class="font-bold text-slate-800 mb-1">Security verifies on arrival</h3>
+      <p class="text-sm text-slate-500">A clear approval checklist and live status updates make checking visitors in straightforward.</p>
+    </div>
+    <div class="p-6 rounded-2xl border border-slate-100">
+      <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+        <i data-lucide="file-text" class="w-5 h-5 text-purple-600"></i>
+      </div>
+      <h3 class="font-bold text-slate-800 mb-1">Admins keep full records</h3>
+      <p class="text-sm text-slate-500">Every booking, approval, and check-in is logged and searchable — no paper logbook needed.</p>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 py-8 border-t border-slate-100 mt-8">
+    © 2026 ResVisit. All rights reserved.
+  </footer>
+</div>
+  <!-- ===================== AUTH VIEW ===================== -->
+ <div id="auth-view" class="hidden min-h-screen flex items-center justify-center p-4 auth-gradient">
+    <div class="w-full max-w-md">
+      <!-- Logo -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-lg mb-4">
+          <i data-lucide="building-2" class="w-8 h-8 text-brand-600"></i>
+        </div>
+        <h1 class="text-3xl font-extrabold text-white tracking-tight">ResVisist</h1>
+        <p class="text-brand-200 mt-1 text-sm font-medium">Visitor Booking & Management System</p>
+      </div>
+
+      <!-- Auth Card -->
+      <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <!-- Tabs -->
+        <div class="flex border-b border-slate-200">
+          <button id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-4 text-sm font-bold text-brand-600 border-b-2 border-brand-600 transition-colors">Sign In</button>
+          <button id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-4 text-sm font-semibold text-slate-400 border-b-2 border-transparent transition-colors">Register</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="p-8">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-slate-800">Welcome Back</h2>
+            <p class="text-sm text-slate-500 mt-1">Sign in to access your dashboard</p>
+          </div>
+          <form onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Email or Username</label>
+              <div class="relative">
+                <i data-lucide="mail" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                <input id="login-email" type="text" required class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Password</label>
+              <div class="relative">
+                <i data-lucide="lock" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                <input id="login-password" type="password" required class="w-full pl-10 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none" placeholder="••••••••" />
+              </div>
+            </div>
+            <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold rounded-xl transition-colors shadow-lg shadow-brand-600/30">
+              Sign In
+            </button>
+          </form>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="p-8 hidden">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-slate-800">Student Registration</h2>
+            <p class="text-sm text-slate-500 mt-1">Only students can register. Admin & Security receive login credentials.</p>
+          </div>
+          <form onsubmit="handleRegister(event)" class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Full Name</label>
+                <input id="reg-name" type="text" required class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none" placeholder="John Doe" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Student ID</label>
+                <input id="reg-studentid" type="text" required class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none" placeholder="STU001" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Email</label>
+              <input id="reg-email" type="email" required class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none" placeholder="student@campus.edu" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Room Number</label>
+                <input id="reg-room" type="text" required class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none" placeholder="A-204" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Phone</label>
+                <input id="reg-phone" type="text" required class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none" placeholder="+1 234 567 890" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Password</label>
+              <input id="reg-password" type="password" required class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none" placeholder="Min 6 characters" />
+            </div>
+            <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold rounded-xl transition-colors shadow-lg shadow-brand-600/30">
+              Create Account
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <p class="text-center text-brand-200 text-xs mt-6">© 2024 ResVisist. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- ===================== APP VIEW ===================== -->
+  <div id="app-view" class="hidden min-h-screen flex">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-slate-900 text-white flex-col flex-shrink-0 hidden lg:flex fixed lg:relative h-screen z-50 transition-transform">
+      <!-- Sidebar content will be rendered by JS -->
+      <div id="sidebar-content"></div>
+    </aside>
+
+    <!-- Mobile sidebar overlay -->
+    <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/50 z-40 lg:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col min-w-0 lg:ml-0">
+      <!-- Top Bar -->
+      <header class="bg-white border-b border-slate-200 px-4 lg:px-8 py-4 flex items-center justify-between sticky top-0 z-30">
+        <div class="flex items-center gap-3">
+          <button onclick="toggleSidebar()" class="lg:hidden p-2 hover:bg-slate-100 rounded-lg">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <div>
+            <h2 id="page-title" class="text-lg font-bold text-slate-800">Dashboard</h2>
+            <p id="page-subtitle" class="text-xs text-slate-500 hidden sm:block">Welcome back</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Notifications -->
+          <button onclick="toggleNotifications()" class="relative p-2 hover:bg-slate-100 rounded-lg transition-colors">
+            <i data-lucide="bell" class="w-5 h-5 text-slate-600"></i>
+            <span id="notif-badge" class="hidden absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          </button>
+
+          <!-- User Menu -->
+          <div class="relative">
+            <button onclick="toggleUserMenu()" class="flex items-center gap-2 p-1.5 hover:bg-slate-100 rounded-lg transition-colors">
+              <div id="user-avatar" class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white text-xs font-bold"></div>
+              <div class="hidden sm:block text-left">
+                <p id="user-name" class="text-sm font-semibold text-slate-800 leading-tight"></p>
+                <p id="user-role" class="text-xs text-slate-500 capitalize leading-tight"></p>
+              </div>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 hidden sm:block"></i>
+            </button>
+
+            <!-- User Dropdown -->
+            <div id="user-menu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50">
+              <div class="px-4 py-2 border-b border-slate-100">
+                <p id="menu-user-name" class="text-sm font-semibold text-slate-800"></p>
+                <p id="menu-user-email" class="text-xs text-slate-500"></p>
+              </div>
+              <button onclick="logout()" class="w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors">
+                <i data-lucide="log-out" class="w-4 h-4"></i> Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Notification Panel (Dropdown) -->
+      <div id="notif-panel" class="hidden fixed top-20 right-4 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 z-50 max-h-[70vh] overflow-hidden flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-slate-200">
+          <h3 class="font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="bell" class="w-4 h-4 text-brand-600"></i> Notifications
+          </h3>
+          <button onclick="markAllRead()" class="text-xs text-brand-600 font-semibold hover:underline">Mark all read</button>
+        </div>
+        <div id="notif-list" class="flex-1 overflow-y-auto p-3 space-y-2"></div>
+      </div>
+
+      <!-- Main Content Area -->
+      <main id="main-content" class="flex-1 p-4 lg:p-8 overflow-y-auto bg-slate-50"></main>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-[100] space-y-3"></div>
+
+  <!-- Modal Container -->
+  <div id="modal-container"></div>
+  <audio id="notif-sound" preload="auto">
+  <source src="notif.wav" type="audio/mpeg">
+  </audio>
+
+  <script type="module" src="script.js?v=2"></script>
+</body>
+</html>
