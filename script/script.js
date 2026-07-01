@@ -270,9 +270,11 @@ function goToAuth(tab) {
 
 function showAuth() {
   showHome();
+  document.getElementById('app-view').classList.add('hidden');
 }
 
 function showApp() {
+  document.getElementById('home-view').classList.add('hidden');
   document.getElementById('auth-view').classList.add('hidden');
   document.getElementById('app-view').classList.remove('hidden');
   renderSidebar();
